@@ -1,0 +1,98 @@
+Metadata-Version: 2.4
+Name: topic6-object-detection-robustness
+Version: 0.1.0
+Summary: Benchmark object detector robustness under synthetic corruptions
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+Requires-Dist: numpy>=1.26
+Requires-Dist: opencv-python>=4.9
+Requires-Dist: pycocotools>=2.0.7
+Requires-Dist: PyYAML>=6.0
+Requires-Dist: pandas>=2.1
+Requires-Dist: matplotlib>=3.8
+Requires-Dist: tqdm>=4.66
+Requires-Dist: ultralytics>=8.3
+Provides-Extra: dev
+Requires-Dist: pytest>=8.0; extra == "dev"
+
+# Topic 6 Object Detection Robustness
+
+Dự án đánh giá mức suy giảm của mô hình phát hiện vật thể khi ảnh bị Gaussian noise, Salt-and-Pepper noise, sương mù tổng hợp và thiếu sáng. Pipeline giữ nguyên annotation COCO, tạo ảnh suy giảm trong bộ nhớ, chạy detector và tính COCO mAP.
+
+## Thiết kế thực nghiệm
+
+- Baseline: ảnh sạch, model và tham số inference cố định.
+- Corruption: 4 loại, mỗi loại 5 severity.
+- Nhiễu ngẫu nhiên: lặp lại bằng nhiều seed xác định.
+- Recovery: preprocessing riêng theo từng loại suy giảm.
+- Metric: mAP@0.5:0.95, mAP@0.5, mAP@0.75, AP small/medium/large, confusion matrix và latency.
+
+## Cài đặt
+
+```powershell
+py -m venv .venv
+.\.venv\Scripts\python.exe -m pip install --upgrade pip
+.\.venv\Scripts\python.exe -m pip install -e ".[dev]"
+```
+
+Nếu máy có GPU NVIDIA, nên cài PyTorch theo cấu hình CUDA phù hợp từ hướng dẫn chính thức trước khi cài project.
+
+## Tải COCO val2017
+
+Lệnh sau tải ảnh validation và annotation trực tiếp từ máy chủ COCO:
+
+```powershell
+.\.venv\Scripts\topic6.exe download --root data/coco
+```
+
+Dung lượng tải và giải nén vào khoảng hơn 1 GB. Archive được xóa sau khi giải nén; thêm `--keep-archives` nếu cần giữ lại.
+
+## Kiểm thử nhanh
+
+Smoke test chỉ chạy 8 ảnh, một severity và một repeat:
+
+```powershell
+.\.venv\Scripts\pytest.exe -q
+.\.venv\Scripts\topic6.exe benchmark --config configs/smoke_test.yaml
+.\.venv\Scripts\topic6.exe plot --metrics runs/smoke_test/metrics.csv
+```
+
+## Chạy benchmark đầy đủ
+
+```powershell
+.\.venv\Scripts\topic6.exe benchmark --config configs/coco_val2017.yaml
+.\.venv\Scripts\topic6.exe plot --metrics runs/coco_val2017_robustness/metrics.csv
+```
+
+Mặc định dùng `yolo11n.pt`. Có thể đổi `weights` trong YAML thành `yolov8n.pt`, model lớn hơn hoặc đường dẫn tới checkpoint cục bộ. Không đổi threshold giữa các condition nếu muốn so sánh công bằng.
+
+## Kết quả
+
+Mỗi condition tạo:
+
+- `predictions.json`: dự đoán theo định dạng COCO.
+- `metrics.json`: metric tổng hợp.
+- `class_ap.json`: AP theo lớp.
+- `confusion_matrix.csv`: ma trận gồm 80 lớp và background.
+- `coco_eval.txt`: báo cáo COCOeval.
+
+File `metrics.csv` ở thư mục run là đầu vào cho script vẽ đường cong mAP theo severity.
+
+## Cấu trúc
+
+```text
+configs/                    Cấu hình thí nghiệm
+docs/SOURCES.md             Nguồn dữ liệu và nghiên cứu
+src/topic6_robustness/      Mã nguồn chính
+tests/                      Unit tests
+data/                       Dataset, không commit
+runs/                       Kết quả thực nghiệm, không commit
+```
+
+## Lưu ý nghiên cứu
+
+- Không fine-tune model trước phép đo baseline robustness.
+- Không thay đổi annotation khi tạo corruption.
+- Báo cáo trung bình và độ lệch chuẩn cho phép biến đổi ngẫu nhiên.
+- Đánh giá recovery cả về mAP và thời gian xử lý; ảnh đẹp hơn chưa chắc detector tốt hơn.
+

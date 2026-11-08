@@ -1,0 +1,34 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "topic6-object-detection-robustness"
+version = "0.1.0"
+description = "Benchmark object detector robustness under synthetic corruptions"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+  "numpy>=1.26",
+  "opencv-python>=4.9",
+  "pycocotools>=2.0.7",
+  "PyYAML>=6.0",
+  "pandas>=2.1",
+  "matplotlib>=3.8",
+  "tqdm>=4.66",
+  "ultralytics>=8.3",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+
+[project.scripts]
+topic6 = "topic6_robustness.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+

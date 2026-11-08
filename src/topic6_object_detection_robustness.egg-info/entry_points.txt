@@ -1,0 +1,2 @@
+[console_scripts]
+topic6 = topic6_robustness.cli:main

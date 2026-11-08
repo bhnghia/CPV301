@@ -1,0 +1,28 @@
+project_name: gaussian_bilateral_pilot
+seed: 2026
+
+dataset:
+  images_dir: data/coco/val2017
+  annotations: data/coco/annotations/instances_val2017.json
+  limit: 200
+
+model:
+  weights: yolo11n.pt
+  device: 0
+  image_size: 640
+  confidence: 0.001
+  nms_iou: 0.7
+  batch_size: 16
+
+experiment:
+  corruptions: [gaussian_noise]
+  severities: [3, 5]
+  repeats: 2
+  include_clean: true
+  include_recovery: true
+  recovery_methods:
+    gaussian_noise: bilateral
+  confusion_confidence: 0.25
+  confusion_iou: 0.5
+
+output_dir: runs/gaussian_bilateral_pilot

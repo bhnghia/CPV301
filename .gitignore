@@ -1,0 +1,14 @@
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.ultralytics/
+data/
+# Keep bulky intermediate runs local, but publish the compact final evidence set.
+runs/*
+!runs/coco_topic6_final_1000/
+!runs/coco_topic6_final_1000/**
+*.pt
+*.onnx
+
