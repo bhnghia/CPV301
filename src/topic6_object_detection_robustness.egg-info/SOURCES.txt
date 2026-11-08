@@ -16,6 +16,10 @@ src/topic6_robustness/detector.py
 src/topic6_robustness/experiment.py
 src/topic6_robustness/metrics.py
 src/topic6_robustness/plotting.py
+src/topic6_robustness/preview.py
 src/topic6_robustness/recovery.py
 tests/test_corruptions.py
+tests/test_experiment.py
 tests/test_metrics.py
+tests/test_plotting.py
+tests/test_recovery.py
