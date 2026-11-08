@@ -1,0 +1,38 @@
+{
+  "gaussian_noise": {
+    "t_statistic": -18.8832862130727,
+    "p_value": 0.033681936804185575,
+    "significant_at_0_05": true,
+    "n_pairs": 2,
+    "mean_raw": 0.14662341896737544,
+    "mean_recovered": 0.20401194458010768,
+    "improvement": 0.05738852561273225
+  },
+  "salt_pepper": {
+    "t_statistic": -2.3909257524007637,
+    "p_value": 0.13929330888546707,
+    "significant_at_0_05": false,
+    "n_pairs": 3,
+    "mean_raw": 0.20808550786273203,
+    "mean_recovered": 0.33258695592154774,
+    "improvement": 0.12450144805881572
+  },
+  "fog": {
+    "t_statistic": null,
+    "p_value": null,
+    "significant_at_0_05": false,
+    "n_pairs": 1,
+    "mean_raw": 0.32666778252556944,
+    "mean_recovered": 0.34817932505829674,
+    "improvement": 0.0215115425327273
+  },
+  "low_light": {
+    "t_statistic": -1.1795626371547618,
+    "p_value": 0.44767044185262467,
+    "significant_at_0_05": false,
+    "n_pairs": 2,
+    "mean_raw": 0.3327075359143522,
+    "mean_recovered": 0.3597192142639044,
+    "improvement": 0.027011678349552204
+  }
+}

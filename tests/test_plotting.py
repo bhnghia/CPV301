@@ -16,6 +16,6 @@ def test_create_plots_headless(tmp_path: Path) -> None:
     metrics = tmp_path / "metrics.csv"
     frame.to_csv(metrics, index=False)
     outputs = create_plots(metrics)
-    assert len(outputs) == 4
+    assert len(outputs) == 5
     assert all(path.exists() and path.stat().st_size > 0 for path in outputs)
 
