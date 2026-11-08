@@ -25,7 +25,9 @@ Nếu máy có GPU NVIDIA, nên cài PyTorch theo cấu hình CUDA phù hợp t�
 
 ## Tải COCO val2017
 
-Lệnh sau tải ảnh validation và annotation trực tiếp từ máy chủ COCO:
+Repository đã gồm sẵn 5.000 ảnh COCO val2017 và `instances_val2017.json` qua Git LFS.
+Sau khi clone, chạy `git lfs pull` nếu ảnh chưa tự tải. Lệnh sau vẫn có thể tải lại ảnh
+validation và annotation trực tiếp từ máy chủ COCO khi cần:
 
 ```powershell
 .\.venv\Scripts\topic6.exe download --root data/coco

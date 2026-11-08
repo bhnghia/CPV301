@@ -68,8 +68,9 @@ py -m venv .venv
 .\.venv\Scripts\topic6.exe preview --config configs/coco_final.yaml --severity 5
 ```
 
-Dataset ảnh COCO không nằm trong repository do dung lượng lớn. Lệnh `download` ở trên
-tải lại đúng nguồn chính thức; các metric, biểu đồ, configuration và manifest cuối đã có sẵn.
+Repository gồm sẵn 5.000 ảnh COCO val2017 và annotation cần thiết qua Git LFS. Sau khi
+clone, chạy `git lfs pull` nếu ảnh chưa tự tải. Các annotation train2017 không cần cho
+dự án, `.venv`, cache và checkpoint model vẫn không được đưa vào repository.
 
 ## 5. Cách đọc kết quả cuối
 
